@@ -1,9 +1,8 @@
 package hnu.multimedia.techparser.auth
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
@@ -11,7 +10,7 @@ import com.google.firebase.ktx.Firebase
 import hnu.multimedia.techparser.MainActivity
 import hnu.multimedia.techparser.databinding.ActivityJoinBinding
 import hnu.multimedia.techparser.util.FirebaseRef
-import hnu.multimedia.techparser.validate.JoinValidator
+import hnu.multimedia.techparser.validate.UserInfoValidator
 
 class JoinActivity : AppCompatActivity() {
 
@@ -26,10 +25,11 @@ class JoinActivity : AppCompatActivity() {
             val email = binding.editTextEmail.text.toString()
             val password = binding.editTextPassword.text.toString()
             val passwordConfig = binding.editTextPasswordConfig.text.toString()
-            if (JoinValidator.validateInfo(binding.root, nickname, email, password, passwordConfig)) {
+            if (UserInfoValidator.validateJoin(binding.root.context, nickname, email, password, passwordConfig)) {
                 createUser(nickname, email, password)
                 finish()
             }
+            return@setOnClickListener
         }
     }
 
@@ -38,13 +38,13 @@ class JoinActivity : AppCompatActivity() {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     saveUser(nickName, email, password)
-                    Snackbar.make(binding.root, "회원가입 성공!.", Snackbar.LENGTH_LONG)
+                    Toast.makeText(binding.root.context, "회원가입 성공!.", Toast.LENGTH_SHORT)
                         .show()
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {
-                    Snackbar.make(binding.root, "회원가입 실패", Snackbar.LENGTH_LONG)
+                    Toast.makeText(binding.root.context, "회원가입 실패", Toast.LENGTH_SHORT)
                         .show()
                 }
             }
