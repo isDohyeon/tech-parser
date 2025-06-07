@@ -1,5 +1,6 @@
 package hnu.multimedia.techparser.auth
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import hnu.multimedia.techparser.databinding.ActivityLoginBinding
@@ -12,5 +13,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        binding.buttonLoginJoin.setOnClickListener {
+            val intent = Intent(this, JoinActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
