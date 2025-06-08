@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import hnu.multimedia.techparser.databinding.ItemPostBinding
-import hnu.multimedia.techparser.rss.model.ParsedFeedModel
+import hnu.multimedia.techparser.rss.model.RssFeed
 
 class FeedAdapter(
-    private val feeds: List<ParsedFeedModel>
+    private val feeds: List<RssFeed>
 ) : RecyclerView.Adapter<FeedAdapter.ViewHolder>(){
 
     class ViewHolder(val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root)
@@ -25,16 +25,16 @@ class FeedAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.textViewPostTitle.text = feeds[position].title
-        holder.binding.textViewBlogName.text = feeds[position].blogName
-        Glide.with(holder.binding.root.context)
-            .load(feeds[position].logoURL)
-            .into(holder.binding.imageViewBlogLogo)
-
-        holder.binding.root.setOnClickListener {
-            val intent = Intent(holder.binding.root.context, WebViewActivity::class.java)
-            intent.putExtra("originalURL", feeds[position].originalURL)
-            holder.binding.root.context.startActivity(intent, null)
-        }
+//        holder.binding.textViewPostTitle.text = feeds[position].title
+//        holder.binding.textViewBlogName.text = feeds[position].blogName
+//        Glide.with(holder.binding.root.context)
+//            .load(feeds[position].logoURL)
+//            .into(holder.binding.imageViewBlogLogo)
+//
+//        holder.binding.root.setOnClickListener {
+//            val intent = Intent(holder.binding.root.context, WebViewActivity::class.java)
+//            intent.putExtra("originalURL", feeds[position].originalURL)
+//            holder.binding.root.context.startActivity(intent, null)
+//        }
     }
 }
