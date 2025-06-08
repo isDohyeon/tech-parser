@@ -1,6 +1,6 @@
-package hnu.multimedia.techparser.rss
+package hnu.multimedia.techparser.rss.model
 
-data class BlogInfo(
+data class BlogModel(
     val name: String = "",
     val rssUrl: String = "",
     val logoUrl: String = ""
