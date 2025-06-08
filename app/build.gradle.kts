@@ -74,4 +74,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation("com.prof18.rssparser:rssparser:6.0.3")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("org.threeten:threetenbp:1.6.8")
 }
