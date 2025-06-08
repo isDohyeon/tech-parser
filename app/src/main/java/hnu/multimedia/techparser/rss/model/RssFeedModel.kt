@@ -8,14 +8,14 @@ data class RssFeedModel(
     var blogName: String = ""
 )
 
-fun List<RssItem>.transform(): List<RssFeedModel> {
+fun List<RssItem>.transform(blogName: String, logoUrl: String): List<RssFeedModel> {
     return this.map {
         RssFeedModel(
             title = it.title ?: "",
             link = it.link ?: "",
             pubDate = it.pubDate ?: "",
-            logoUrl = it.logoUrl,
-            blogName = it.blogName
+            logoUrl = logoUrl,
+            blogName = blogName
         )
     }
 }

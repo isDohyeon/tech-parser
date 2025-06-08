@@ -1,15 +1,20 @@
 package hnu.multimedia.techparser.ui.home
 
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import hnu.multimedia.techparser.databinding.ItemPostBinding
 import hnu.multimedia.techparser.rss.model.RssFeed
+import hnu.multimedia.techparser.rss.model.RssFeedModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class FeedAdapter(
-    private val feeds: List<RssFeed>
+    private val feeds: List<RssFeedModel>
 ) : RecyclerView.Adapter<FeedAdapter.ViewHolder>(){
 
     class ViewHolder(val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root)
@@ -25,16 +30,37 @@ class FeedAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        holder.binding.textViewPostTitle.text = feeds[position].title
-//        holder.binding.textViewBlogName.text = feeds[position].blogName
-//        Glide.with(holder.binding.root.context)
-//            .load(feeds[position].logoURL)
-//            .into(holder.binding.imageViewBlogLogo)
-//
-//        holder.binding.root.setOnClickListener {
-//            val intent = Intent(holder.binding.root.context, WebViewActivity::class.java)
-//            intent.putExtra("originalURL", feeds[position].originalURL)
-//            holder.binding.root.context.startActivity(intent, null)
-//        }
+        holder.binding.textViewPostTitle.text = feeds[position].title
+        holder.binding.textViewBlogName.text = feeds[position].blogName
+        Glide.with(holder.binding.root.context)
+            .load(feeds[position].logoUrl)
+            .into(holder.binding.imageViewBlogLogo)
+
+        holder.binding.root.setOnClickListener {
+            val intent = Intent(holder.binding.root.context, WebViewActivity::class.java)
+            intent.putExtra("originalURL", feeds[position].link)
+            holder.binding.root.context.startActivity(intent, null)
+        }
+
+        holder.binding.textViewPubDate.text = formatPubDate(feeds[position].pubDate)
+    }
+
+    private fun formatPubDate(rawDate: String?): String {
+        if (rawDate == null) return ""
+
+        val inputFormats = listOf(
+            SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH),
+            SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH)
+        )
+        val outputFormat = SimpleDateFormat("yyyy년 M월 d일", Locale.KOREAN)
+
+        for (format in inputFormats) {
+            try {
+                val date = format.parse(rawDate)
+                if (date != null) return outputFormat.format(date)
+            } catch (_: Exception) {}
+        }
+
+        return rawDate
     }
 }
