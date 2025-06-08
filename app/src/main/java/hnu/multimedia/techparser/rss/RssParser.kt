@@ -1,11 +1,13 @@
 package hnu.multimedia.techparser.rss
 
-import com.google.firebase.database.FirebaseDatabase
 import hnu.multimedia.techparser.rss.model.RssFeedModel
 import hnu.multimedia.techparser.rss.model.RssItem
 import hnu.multimedia.techparser.rss.model.transform
 import hnu.multimedia.techparser.rss.network.RssRetrofitClient
+import hnu.multimedia.techparser.util.FirebaseRef
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
@@ -15,51 +17,39 @@ object RssParser {
 
     private val rssApiService = RssRetrofitClient.createRssService()
 
-    private val dateFormats = listOf(
-        SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH),
-        SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH)
-    )
-
     private fun parseDate(dateStr: String?): Date? {
-        if (dateStr == null) return null
+        val dateFormats = listOf(
+            SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH),
+            SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH)
+        )
         for (format in dateFormats) {
-            try {
-                return format.parse(dateStr)
-            } catch (_: Exception) {}
+            return dateStr?.let { format.parse(it) }
         }
         return null
     }
 
     private suspend fun fetchRssFeed(rssUrl: String): List<RssItem> = withContext(Dispatchers.IO) {
-        try {
-            val rssFeed = rssApiService.getRssFeed(rssUrl)
-            rssFeed.channel.items ?: emptyList()
-        } catch (_: Exception) {
-            emptyList()
-        }
+        val rssFeed = rssApiService.getRssFeed(rssUrl)
+        rssFeed.channel.items?.take(5) ?: emptyList()
     }
 
     suspend fun fetchRssFeeds(): List<RssFeedModel> = withContext(Dispatchers.IO) {
         val feeds = mutableListOf<RssFeedModel>()
 
-        try {
-            val snapshot = FirebaseDatabase.getInstance()
-                .getReference("blogs")
-                .get()
-                .await()
-
-            for (blogSnap in snapshot.children) {
-                val blogName = blogSnap.child("name").getValue(String::class.java) ?: continue
-                val rssUrl = blogSnap.child("rssUrl").getValue(String::class.java) ?: continue
+        val snapshot = FirebaseRef.blogs.get().await()
+        val deferredList = snapshot.children.map { blogSnap ->
+            async {
+                val blogName = blogSnap.child("name").getValue(String::class.java) ?: return@async emptyList<RssFeedModel>()
+                val rssUrl = blogSnap.child("rssUrl").getValue(String::class.java) ?: return@async emptyList<RssFeedModel>()
                 val logoUrl = blogSnap.child("logoUrl").getValue(String::class.java) ?: ""
 
                 val items = fetchRssFeed(rssUrl)
-                val feedModels = items.transform(blogName, logoUrl)
-
-                feeds.addAll(feedModels)
+                items.transform(blogName, logoUrl)
             }
+        }
 
-        } catch (_: Exception) { }
+        val results = deferredList.awaitAll()
+        results.forEach { feeds.addAll(it) }
 
         return@withContext feeds.sortedByDescending { parseDate(it.pubDate) }
     }
