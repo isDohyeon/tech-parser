@@ -54,7 +54,7 @@ class JoinActivity : AppCompatActivity() {
         val userModel = UserModel(uid, nickName, email, password)
         val userRef = FirebaseRef.users.child(uid)
         userRef.child("userInfo").setValue(userModel)
-        userRef.child("bookmarks").child("기본 폴더").setValue(true)
+        userRef.child("bookmarks").push().setValue("기본 폴더")
         userRef.child("subscribe").setValue(true)
         userRef.child("settings").setValue(true)
     }
