@@ -1,10 +1,11 @@
 package hnu.multimedia.techparser.ui.bookmark
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import hnu.multimedia.techparser.databinding.ItemFolderBinding
+import hnu.multimedia.techparser.util.FirebaseRef
 
 class BookmarkAdapter(
     private var bookmarkFolders: MutableList<String>
@@ -23,9 +24,32 @@ class BookmarkAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        for (bookmarkFolder in bookmarkFolders) {
-            Log.d("bookmarkFolder", "bookmarkFolders: $bookmarkFolders")
+        val folderName = bookmarkFolders[position]
+        holder.binding.textViewFolderName.text = folderName
+        holder.binding.root.setOnLongClickListener {
+            AlertDialog.Builder(holder.binding.root.context)
+                .setTitle("폴더 삭제")
+                .setMessage("폴더 \"$folderName\"을(를) 삭제하시겠습니까?")
+                .setPositiveButton("예") { _, _ ->
+                    deleteBookmarkFolder(folderName)
+                }
+                .setNegativeButton("아니오", null)
+                .show()
+            true
         }
-        holder.binding.textViewFolderName.text = bookmarkFolders[position]
+    }
+
+    private fun deleteBookmarkFolder(removeFolderName: String) {
+        val ref = FirebaseRef.userBookmarksRef()
+        ref.get().addOnSuccessListener { snapshot ->
+            for (child in snapshot.children) {
+                val bookmarkFolderName = child.getValue(String::class.java)
+                if (bookmarkFolderName == removeFolderName) {
+                    ref.child(child.key!!).removeValue()
+                    break
+
+                }
+            }
+        }
     }
 }
