@@ -27,6 +27,8 @@ class JoinActivity : AppCompatActivity() {
             val passwordConfig = binding.editTextPasswordConfig.text.toString()
             if (UserInfoValidator.validateJoin(binding.root.context, nickname, email, password, passwordConfig)) {
                 createUser(nickname, email, password)
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
                 finish()
             }
             return@setOnClickListener
@@ -40,9 +42,6 @@ class JoinActivity : AppCompatActivity() {
                     saveUser(nickName, email, password)
                     Toast.makeText(binding.root.context, "회원가입 성공!.", Toast.LENGTH_SHORT)
                         .show()
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
                 } else {
                     Toast.makeText(binding.root.context, "회원가입 실패", Toast.LENGTH_SHORT)
                         .show()
@@ -53,6 +52,10 @@ class JoinActivity : AppCompatActivity() {
     private fun saveUser(nickName: String, email: String, password: String) {
         val uid = Firebase.auth.currentUser?.uid ?: ""
         val userModel = UserModel(uid, nickName, email, password)
-        FirebaseRef.users.child(uid).setValue(userModel)
+        val userRef = FirebaseRef.users.child(uid)
+        userRef.child("userInfo").setValue(userModel)
+        userRef.child("bookmarks").child("기본 폴더").setValue(true)
+        userRef.child("subscribe").setValue(true)
+        userRef.child("settings").setValue(true)
     }
 }

@@ -1,12 +1,13 @@
 package hnu.multimedia.techparser.ui.bookmark
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import hnu.multimedia.techparser.databinding.ItemFolderBinding
 
 class BookmarkAdapter(
-    private val bookmarkFolders: List<String>
+    private var bookmarkFolders: MutableList<String>
 ) : RecyclerView.Adapter<BookmarkAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ItemFolderBinding) : RecyclerView.ViewHolder(binding.root)
@@ -22,6 +23,9 @@ class BookmarkAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        for (bookmarkFolder in bookmarkFolders) {
+            Log.d("bookmarkFolder", "bookmarkFolders: $bookmarkFolders")
+        }
         holder.binding.textViewFolderName.text = bookmarkFolders[position]
     }
 }

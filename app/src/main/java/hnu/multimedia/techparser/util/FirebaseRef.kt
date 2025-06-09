@@ -1,5 +1,6 @@
 package hnu.multimedia.techparser.util
 
+import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
@@ -15,7 +16,14 @@ class FirebaseRef {
         var currentUserId: String = Firebase.auth.currentUser?.uid ?: ""
 
         fun initCUid() {
-            currentUserId = Firebase.auth.currentUser?.uid ?: ""
+            val currentUser = Firebase.auth.currentUser
+            if (currentUser == null) {
+                Log.w("folder log", "Firebase 유저가 아직 로그인되지 않았습니다.")
+                return
+            }
+
+            currentUserId = currentUser.uid
+            Log.d("folder log", "currentUserId: $currentUserId")
             MyData.init()
         }
 

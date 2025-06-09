@@ -16,10 +16,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        Toast.makeText(binding.root.context, "RSS 피드를 불러오는 중입니다..", Toast.LENGTH_LONG).show()
         FirebaseRef.initCUid()
+        Toast.makeText(binding.root.context, "RSS 피드를 불러오는 중입니다..", Toast.LENGTH_LONG).show()
         val navView: BottomNavigationView = binding.navView
-
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         navView.setupWithNavController(navController)
     }
