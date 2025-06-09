@@ -17,6 +17,6 @@
     <item
         android:id="@+id/navigation_setting"
         android:icon="@drawable/setting"
-        android:title="@string/title_setting" />
+        android:title="@string/title_settings" />
 
 </menu>

@@ -1,11 +1,10 @@
 package hnu.multimedia.techparser
 
 import android.os.Bundle
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import hnu.multimedia.techparser.databinding.ActivityMainBinding
 import hnu.multimedia.techparser.util.FirebaseRef
@@ -17,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        Toast.makeText(binding.root.context, "RSS 피드를 불러오는 중입니다..", Toast.LENGTH_LONG).show()
         FirebaseRef.initCUid()
         val navView: BottomNavigationView = binding.navView
 

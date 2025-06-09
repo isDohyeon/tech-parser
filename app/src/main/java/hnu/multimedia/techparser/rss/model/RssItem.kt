@@ -11,7 +11,4 @@ data class RssItem(
     val link: String? = null,
     @PropertyElement(name = "pubDate")
     val pubDate: String? = null
-) {
-    val logoUrl: String = ""
-    val blogName: String = ""
-}
+)

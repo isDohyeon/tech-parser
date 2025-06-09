@@ -26,6 +26,6 @@
     <fragment
         android:id="@+id/navigation_setting"
         android:name="hnu.multimedia.techparser.ui.setting.SettingFragment"
-        android:label="@string/title_subscribe"
+        android:label="@string/title_settings"
         tools:layout="@layout/fragment_setting" />
 </navigation>

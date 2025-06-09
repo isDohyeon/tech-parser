@@ -33,13 +33,27 @@ class FeedAdapter(
             .load(feeds[position].logoUrl)
             .into(holder.binding.imageViewBlogLogo)
 
+        onShortClick(holder, position)
+
+        onLongClick()
+
+        holder.binding.textViewPubDate.text = formatPubDate(feeds[position].pubDate)
+    }
+
+    private fun onLongClick() {
+
+
+    }
+
+    private fun onShortClick(
+        holder: ViewHolder,
+        position: Int
+    ) {
         holder.binding.root.setOnClickListener {
             val intent = Intent(holder.binding.root.context, WebViewActivity::class.java)
             intent.putExtra("originalURL", feeds[position].link)
             holder.binding.root.context.startActivity(intent, null)
         }
-
-        holder.binding.textViewPubDate.text = formatPubDate(feeds[position].pubDate)
     }
 
     private fun formatPubDate(rawDate: String?): String {
