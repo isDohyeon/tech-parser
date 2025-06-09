@@ -1,4 +1,4 @@
-package hnu.multimedia.techparser.ui.home
+package hnu.multimedia.techparser.ui.feed
 
 import android.os.Bundle
 import android.view.LayoutInflater

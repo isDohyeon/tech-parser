@@ -7,19 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_feed"
-        android:name="hnu.multimedia.techparser.ui.home.FeedFragment"
+        android:name="hnu.multimedia.techparser.ui.feed.FeedFragment"
         android:label="@string/title_feed"
         tools:layout="@layout/fragment_feed" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="hnu.multimedia.techparser.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_bookmark"
+        android:name="hnu.multimedia.techparser.ui.bookmark.BookmarkFragment"
+        android:label="@string/title_bookmark"
+        tools:layout="@layout/fragment_bookmark" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="hnu.multimedia.techparser.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_subscribe"
+        android:name="hnu.multimedia.techparser.ui.subscribe.SubscribeFragment"
+        android:label="@string/title_subscribe"
+        tools:layout="@layout/fragment_subscribe" />
+
+    <fragment
+        android:id="@+id/navigation_setting"
+        android:name="hnu.multimedia.techparser.ui.setting.SettingFragment"
+        android:label="@string/title_subscribe"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

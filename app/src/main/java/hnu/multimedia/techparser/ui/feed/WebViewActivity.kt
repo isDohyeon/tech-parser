@@ -1,10 +1,7 @@
-package hnu.multimedia.techparser.ui.home
+package hnu.multimedia.techparser.ui.feed
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import android.webkit.WebResourceError
-import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity

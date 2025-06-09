@@ -1,14 +1,11 @@
-package hnu.multimedia.techparser.ui.home
+package hnu.multimedia.techparser.ui.feed
 
 import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import hnu.multimedia.techparser.databinding.ItemPostBinding
-import hnu.multimedia.techparser.rss.model.RssFeed
 import hnu.multimedia.techparser.rss.model.RssFeedModel
 import java.text.SimpleDateFormat
 import java.util.Locale

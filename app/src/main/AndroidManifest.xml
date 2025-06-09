@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.home.WebViewActivity"
+            android:name=".ui.feed.WebViewActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
