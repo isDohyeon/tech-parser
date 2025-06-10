@@ -28,16 +28,26 @@ class BookmarkAdapter(
         val folderName = bookmarkFolders[position]
         holder.binding.textViewFolderName.text = folderName
         holder.binding.root.setOnLongClickListener {
-            AlertDialog.Builder(holder.binding.root.context)
-                .setTitle("폴더 삭제")
-                .setMessage("폴더 \"$folderName\"을(를) 삭제하시겠습니까?")
-                .setPositiveButton("예") { _, _ ->
-                    deleteBookmarkFolder(folderName)
-                }
-                .setNegativeButton("아니오", null)
-                .show()
-            true
+            deleteFolder(holder, folderName)
         }
+        holder.binding.root.setOnClickListener {
+
+        }
+    }
+
+    private fun deleteFolder(
+        holder: ViewHolder,
+        folderName: String
+    ): Boolean {
+        AlertDialog.Builder(holder.binding.root.context)
+            .setTitle("폴더 삭제")
+            .setMessage("폴더 \"$folderName\"을(를) 삭제하시겠습니까?")
+            .setPositiveButton("예") { _, _ ->
+                deleteBookmarkFolder(folderName)
+            }
+            .setNegativeButton("아니오", null)
+            .show()
+        return true
     }
 
     private fun deleteBookmarkFolder(removeFolderName: String) {

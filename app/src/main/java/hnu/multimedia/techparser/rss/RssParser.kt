@@ -17,7 +17,7 @@ object RssParser {
 
     private val rssApiService = RssRetrofitClient.createRssService()
 
-    private fun parseDate(dateStr: String?): Date? {
+    private fun parseRssDate(dateStr: String?): Date? {
         val dateFormats = listOf(
             SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH),
             SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH)
@@ -30,7 +30,7 @@ object RssParser {
 
     private suspend fun fetchRssFeed(rssUrl: String): List<RssItem> = withContext(Dispatchers.IO) {
         val rssFeed = rssApiService.getRssFeed(rssUrl)
-        rssFeed.channel.items?.take(5) ?: emptyList()
+        rssFeed.channel.items ?: emptyList()
     }
 
     suspend fun fetchRssFeeds(): List<RssFeedModel> = withContext(Dispatchers.IO) {
@@ -51,7 +51,7 @@ object RssParser {
         val results = deferredList.awaitAll()
         results.forEach { feeds.addAll(it) }
 
-        val sortedFeeds = feeds.sortedByDescending { parseDate(it.pubDate) }
+        val sortedFeeds = feeds.sortedByDescending { parseRssDate(it.pubDate) }
 
         return@withContext sortedFeeds.mapIndexed { index, feedModel ->
             feedModel.copy(id = index)

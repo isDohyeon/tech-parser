@@ -10,6 +10,7 @@ class FirebaseRef {
 
     companion object {
         private val database = Firebase.database
+        val feeds = database.getReference("feeds")
         val users = database.getReference("users")
         val blogs = database.getReference("blogs")
 
@@ -17,13 +18,7 @@ class FirebaseRef {
 
         fun initCUid() {
             val currentUser = Firebase.auth.currentUser
-            if (currentUser == null) {
-                Log.w("folder log", "Firebase 유저가 아직 로그인되지 않았습니다.")
-                return
-            }
-
-            currentUserId = currentUser.uid
-            Log.d("folder log", "currentUserId: $currentUserId")
+            currentUserId = currentUser?.uid ?: ""
             MyData.init()
         }
 

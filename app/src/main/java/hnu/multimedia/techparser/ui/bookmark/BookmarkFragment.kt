@@ -28,8 +28,8 @@ class BookmarkFragment : Fragment() {
     ): View {
 
         getBookmarkFolders()
-        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        binding.recyclerView.adapter = BookmarkAdapter(bookmarkFolders)
+        binding.folderRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.folderRecyclerView.adapter = BookmarkAdapter(bookmarkFolders)
 
         binding.buttonAddFolder.setOnClickListener {
             showAddBookmarkDialog()
@@ -73,7 +73,7 @@ class BookmarkFragment : Fragment() {
                     val folderName = Utils.removeTimeStamp(savedFolderName)
                     bookmarkFolders.add(folderName)
                 }
-                binding.recyclerView.adapter?.notifyDataSetChanged()
+                binding.folderRecyclerView.adapter?.notifyDataSetChanged()
             }
             override fun onCancelled(error: DatabaseError) {}
         }
