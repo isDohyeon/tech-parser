@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import hnu.multimedia.techparser.databinding.ItemFolderBinding
 import hnu.multimedia.techparser.util.FirebaseRef
+import hnu.multimedia.techparser.util.Utils
 
 class BookmarkAdapter(
     private var bookmarkFolders: MutableList<String>
@@ -40,12 +41,13 @@ class BookmarkAdapter(
     }
 
     private fun deleteBookmarkFolder(removeFolderName: String) {
-        val ref = FirebaseRef.userBookmarksRef()
+        val ref = FirebaseRef.bookmarksRef()
         ref.get().addOnSuccessListener { snapshot ->
             for (child in snapshot.children) {
-                val bookmarkFolderName = child.getValue(String::class.java)
+                val savedFolderName = child.key.toString()
+                val bookmarkFolderName = Utils.removeTimeStamp(savedFolderName)
                 if (bookmarkFolderName == removeFolderName) {
-                    ref.child(child.key!!).removeValue()
+                    ref.child(savedFolderName).removeValue()
                     break
 
                 }

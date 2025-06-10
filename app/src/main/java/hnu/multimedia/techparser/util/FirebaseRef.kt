@@ -27,15 +27,19 @@ class FirebaseRef {
             MyData.init()
         }
 
-        fun userBookmarksRef(): DatabaseReference {
+        fun bookmarksRef(): DatabaseReference {
             return users.child(currentUserId).child("bookmarks")
         }
 
-        fun userSubscribeRef(): DatabaseReference {
+        fun bookmarkFolderRef(folderName: String): DatabaseReference {
+            return bookmarksRef().child(folderName)
+        }
+
+        fun subscribeRef(): DatabaseReference {
             return users.child(currentUserId).child("subscribe")
         }
 
-        fun userSettingsRef(): DatabaseReference {
+        fun settingsRef(): DatabaseReference {
             return users.child(currentUserId).child("settings")
         }
     }

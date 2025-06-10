@@ -1,6 +1,7 @@
 package hnu.multimedia.techparser.rss.model
 
 data class RssFeedModel(
+    val id: Int = 0,
     val title: String = "",
     val link: String = "",
     val pubDate: String = "",

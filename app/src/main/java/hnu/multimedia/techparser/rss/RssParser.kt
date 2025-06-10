@@ -51,6 +51,10 @@ object RssParser {
         val results = deferredList.awaitAll()
         results.forEach { feeds.addAll(it) }
 
-        return@withContext feeds.sortedByDescending { parseDate(it.pubDate) }
+        val sortedFeeds = feeds.sortedByDescending { parseDate(it.pubDate) }
+
+        return@withContext sortedFeeds.mapIndexed { index, feedModel ->
+            feedModel.copy(id = index)
+        }
     }
 }

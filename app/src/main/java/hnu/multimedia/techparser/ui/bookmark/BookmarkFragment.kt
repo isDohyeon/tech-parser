@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import hnu.multimedia.techparser.databinding.FragmentBookmarkBinding
 import hnu.multimedia.techparser.util.FirebaseRef
+import hnu.multimedia.techparser.util.Utils
 
 class BookmarkFragment : Fragment() {
 
@@ -56,21 +57,21 @@ class BookmarkFragment : Fragment() {
     }
 
     private fun addBookmarkFolder(folderName: String) {
-        val ref = FirebaseRef.userBookmarksRef().push()
-        ref.setValue(folderName)
+        val timeStamp = System.currentTimeMillis().toString()
+        val saveFolderName = "${timeStamp}_${folderName}"
+        FirebaseRef.bookmarksRef().child(saveFolderName).setValue(true)
     }
 
     private fun getBookmarkFolders() {
-        val ref = FirebaseRef.userBookmarksRef()
+        val ref = FirebaseRef.bookmarksRef()
         val postListener = object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
                 bookmarkFolders.clear()
                 for (bookmarkFolderName in snapshot.children) {
-                    val value = bookmarkFolderName.getValue(String::class.java)
-                    value?.let {
-                        bookmarkFolders.add(value)
-                    }
+                    val savedFolderName = bookmarkFolderName.key.toString()
+                    val folderName = Utils.removeTimeStamp(savedFolderName)
+                    bookmarkFolders.add(folderName)
                 }
                 binding.recyclerView.adapter?.notifyDataSetChanged()
             }
