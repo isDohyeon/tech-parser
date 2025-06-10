@@ -1,10 +1,12 @@
 package hnu.multimedia.techparser.ui.bookmark
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import hnu.multimedia.techparser.databinding.ItemFolderBinding
+import hnu.multimedia.techparser.ui.bookmark.bookmarkfeed.BookmarkFeedActivity
 import hnu.multimedia.techparser.util.FirebaseRef
 import hnu.multimedia.techparser.util.Utils
 
@@ -31,7 +33,9 @@ class BookmarkAdapter(
             deleteFolder(holder, folderName)
         }
         holder.binding.root.setOnClickListener {
-
+            val intent = Intent(holder.binding.root.context, BookmarkFeedActivity::class.java)
+            intent.putExtra("folderName", folderName)
+            holder.binding.root.context.startActivity(intent)
         }
     }
 

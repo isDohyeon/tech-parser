@@ -30,7 +30,7 @@ object RssParser {
 
     private suspend fun fetchRssFeed(rssUrl: String): List<RssItem> = withContext(Dispatchers.IO) {
         val rssFeed = rssApiService.getRssFeed(rssUrl)
-        rssFeed.channel.items ?: emptyList()
+        rssFeed.channel.items?.take(10) ?: emptyList()
     }
 
     suspend fun fetchRssFeeds(): List<RssFeedModel> = withContext(Dispatchers.IO) {

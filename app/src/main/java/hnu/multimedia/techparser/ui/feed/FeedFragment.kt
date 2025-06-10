@@ -18,7 +18,9 @@ import hnu.multimedia.techparser.util.FirebaseRef
 class FeedFragment : Fragment() {
 
     private val binding by lazy { FragmentFeedBinding.inflate(layoutInflater) }
-    private var feeds = listOf<RssFeedModel>()
+    companion object {
+        var feeds = mutableListOf<RssFeedModel>()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,10 +28,29 @@ class FeedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        feeds = TechParserApp.feeds
+        getRssFeeds()
         binding.folderRecyclerView.layoutManager = LinearLayoutManager(binding.root.context)
         binding.folderRecyclerView.adapter = FeedAdapter(feeds)
 
         return binding.root
+    }
+
+    private fun getRssFeeds() {
+        val ref = FirebaseRef.feeds
+        val postListener = object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                feeds.clear()
+                for (child in snapshot.children) {
+                    val feed = child.getValue(RssFeedModel::class.java)
+                    feed?.let {
+                        feeds.add(feed)
+                    }
+                }
+                binding.folderRecyclerView.adapter?.notifyDataSetChanged()
+            }
+            override fun onCancelled(error: DatabaseError) {}
+        }
+        ref.addValueEventListener(postListener)
     }
 }
