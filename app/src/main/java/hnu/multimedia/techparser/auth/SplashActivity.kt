@@ -24,23 +24,10 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         auth = Firebase.auth
-        fetchRssFeeds()
-    }
-
-    private fun fetchRssFeeds() {
-        lifecycleScope.launch {
-            val rssFeeds = RssParser.fetchRssFeeds()
-            for (rssFeed in rssFeeds) {
-                val key = rssFeed.id.toString()
-                FirebaseRef.feeds.child(key).setValue(rssFeed)
-            }
-            startLoginActivity()
-        }
-    }
-
-    private fun startLoginActivity() {
-        val intent = Intent(this@SplashActivity, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
+        Handler(Looper.getMainLooper()).postDelayed({
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }, 1000)
     }
 }
