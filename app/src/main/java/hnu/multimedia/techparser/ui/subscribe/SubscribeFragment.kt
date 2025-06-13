@@ -32,6 +32,8 @@ class SubscribeFragment : Fragment() {
             getBlogs()
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
+        binding.recyclerView.adapter = SubscribeAdapter(subscribeBlogs, true)
+
         binding.buttonSubscribe.setOnClickListener {
             binding.recyclerView.adapter = SubscribeAdapter(subscribeBlogs, true)
         }
