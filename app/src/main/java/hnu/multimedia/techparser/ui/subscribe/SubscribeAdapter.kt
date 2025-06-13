@@ -1,5 +1,6 @@
 package hnu.multimedia.techparser.ui.subscribe
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.ktx.Firebase
 import hnu.multimedia.techparser.databinding.ItemBlogBinding
+import hnu.multimedia.techparser.ui.feed.WebViewActivity
 import hnu.multimedia.techparser.ui.subscribe.model.BlogModel
 import hnu.multimedia.techparser.util.FirebaseRef
 
@@ -47,6 +49,12 @@ class SubscribeAdapter(
         }
         holder.binding.imageViewUncheck.setOnClickListener {
             FirebaseRef.subscribeRef().child(blogName).setValue(true)
+        }
+
+        holder.binding.root.setOnClickListener {
+            val intent = Intent(holder.binding.root.context, WebViewActivity::class.java)
+            intent.putExtra("originalURL", blogs[position].url)
+            holder.binding.root.context.startActivity(intent, null)
         }
     }
 }
