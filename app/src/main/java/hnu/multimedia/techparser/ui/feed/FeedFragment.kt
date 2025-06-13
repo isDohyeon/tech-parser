@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import hnu.multimedia.techparser.TechParserApp
 import hnu.multimedia.techparser.databinding.FragmentFeedBinding
 import hnu.multimedia.techparser.rss.RssRepository
 import hnu.multimedia.techparser.rss.model.RssFeedModel
@@ -21,7 +20,7 @@ class FeedFragment : Fragment() {
 
     private val binding by lazy { FragmentFeedBinding.inflate(layoutInflater) }
     companion object {
-        var feeds = mutableListOf<RssFeedModel>()
+        var filteredFeeds = mutableListOf<RssFeedModel>()
     }
 
     override fun onCreateView(
@@ -30,30 +29,30 @@ class FeedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        // TODO : 구독중인 블로그의 RSS 피드만을 담기
-        feeds = RssRepository.feeds.toMutableList()
-        binding.folderRecyclerView.layoutManager = LinearLayoutManager(binding.root.context)
-        binding.folderRecyclerView.adapter = FeedAdapter(feeds, lifecycleScope)
+        observeFeeds()
+        binding.recyclerView.layoutManager = LinearLayoutManager(binding.root.context)
+        binding.recyclerView.adapter = FeedAdapter(filteredFeeds, lifecycleScope)
 
         return binding.root
     }
 
-    private fun getRssFeeds() {
-        val ref = FirebaseRef.feeds
+    private fun observeFeeds() {
+        val ref = FirebaseRef.subscribeRef()
         val postListener = object : ValueEventListener {
-            @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
-                feeds.clear()
-                for (child in snapshot.children) {
-                    val feed = child.getValue(RssFeedModel::class.java)
-                    feed?.let {
-                        feeds.add(feed)
-                    }
-                }
-                binding.folderRecyclerView.adapter?.notifyDataSetChanged()
+                val subscribeBlogs = snapshot.children.map { it.key.toString() }.toSet()
+                updateFeeds(subscribeBlogs)
             }
             override fun onCancelled(error: DatabaseError) {}
         }
         ref.addValueEventListener(postListener)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun updateFeeds(subscribeBlogs: Set<String>) {
+        val allFeeds = RssRepository.feeds
+        filteredFeeds.clear()
+        filteredFeeds.addAll(allFeeds.filter { it.blogName in subscribeBlogs })
+        binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 }

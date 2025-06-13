@@ -2,25 +2,18 @@ package hnu.multimedia.techparser.ui.bookmark.bookmarkfeed
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import hnu.multimedia.techparser.R
-import hnu.multimedia.techparser.TechParserApp
 import hnu.multimedia.techparser.databinding.ActivityBookmarkFeedBinding
 import hnu.multimedia.techparser.rss.model.RssFeedModel
 import hnu.multimedia.techparser.ui.feed.FeedFragment
 import hnu.multimedia.techparser.util.FirebaseRef
 import hnu.multimedia.techparser.util.Utils
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
 class BookmarkFeedActivity : AppCompatActivity() {
 
@@ -51,9 +44,11 @@ class BookmarkFeedActivity : AppCompatActivity() {
                         }
                     }
                     feeds.clear()
+                    val allFeeds = FeedFragment.filteredFeeds
+
                     for (id in ids) {
-                        val item = FeedFragment.feeds[id]
-                        feeds.add(item)
+                        val matchedFeed = allFeeds.find { it.id == id }
+                        matchedFeed?.let { feeds.add(it) }
                     }
                     binding.folderRecyclerView.adapter = BookmarkFeedAdapter(feeds, savedFolder)
                 }
