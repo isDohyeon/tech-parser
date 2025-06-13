@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import hnu.multimedia.techparser.R
 import hnu.multimedia.techparser.databinding.FragmentSubscribeBinding
 import hnu.multimedia.techparser.rss.RssRepository
 import hnu.multimedia.techparser.ui.subscribe.model.BlogModel
@@ -33,12 +34,15 @@ class SubscribeFragment : Fragment() {
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerView.adapter = SubscribeAdapter(subscribeBlogs, true)
+        updateButtonStyle(true)
 
         binding.buttonSubscribe.setOnClickListener {
             binding.recyclerView.adapter = SubscribeAdapter(subscribeBlogs, true)
+            updateButtonStyle(true)
         }
         binding.buttonRecommend.setOnClickListener {
             binding.recyclerView.adapter = SubscribeAdapter(recommendBlogs, false)
+            updateButtonStyle(false)
         }
 
         return binding.root
@@ -69,5 +73,18 @@ class SubscribeFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {}
         }
         ref.addValueEventListener(postListener)
+    }
+
+    private fun updateButtonStyle(isSubscribeMode: Boolean) {
+        setButtonStyle(binding.buttonSubscribe, isSubscribeMode)
+        setButtonStyle(binding.buttonRecommend, !isSubscribeMode)
+    }
+
+    private fun setButtonStyle(button: View, isSelected: Boolean) {
+        val backgroundColor = if (isSelected) R.color.blue else R.color.gray
+        val textColor = android.R.color.white
+
+        button.setBackgroundColor(resources.getColor(backgroundColor, null))
+        (button as? android.widget.Button)?.setTextColor(resources.getColor(textColor, null))
     }
 }
