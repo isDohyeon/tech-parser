@@ -3,6 +3,7 @@ package hnu.multimedia.techparser.ui.subscribe
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -46,9 +47,11 @@ class SubscribeAdapter(
 
         holder.binding.imageViewCheck.setOnClickListener {
             FirebaseRef.subscribeRef().child(blogName).removeValue()
+            Toast.makeText(holder.binding.root.context, "$blogName 블로그를 구독 해지하였습니다.", Toast.LENGTH_SHORT).show()
         }
         holder.binding.imageViewUncheck.setOnClickListener {
             FirebaseRef.subscribeRef().child(blogName).setValue(true)
+            Toast.makeText(holder.binding.root.context, "$blogName 블로그를 구독하였습니다.", Toast.LENGTH_SHORT).show()
         }
 
         holder.binding.root.setOnClickListener {
