@@ -1,7 +1,5 @@
 package hnu.multimedia.techparser.util
 
-import android.util.Log
-import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -12,18 +10,16 @@ object Utils {
         return savedFolderName.substringAfter("_")
     }
 
-    fun findSavedFolder(folderName: String, callback: (String) -> Unit) {
-        FirebaseRef.bookmarksRef().get().addOnSuccessListener { snapshot ->
-            for (child in snapshot.children) {
-                val savedFolderName = child.key.toString()
-                val removedTimeStamp = removeTimeStamp(savedFolderName)
-                if (removedTimeStamp == folderName) {
-                    callback(savedFolderName)
-                    return@addOnSuccessListener
-                }
+    suspend fun findSavedFolder(folderName: String): String {
+        val snapshot = FirebaseRef.bookmarksRef().get().await()
+        for (child in snapshot.children) {
+            val savedFolderName = child.key.toString()
+            val removedTimeStamp = removeTimeStamp(savedFolderName)
+            if (removedTimeStamp == folderName) {
+                return savedFolderName
             }
-            callback("")
         }
+        return ""
     }
 
     fun formatPubDate(rawDate: String?): String {

@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import hnu.multimedia.techparser.TechParserApp
 import hnu.multimedia.techparser.databinding.FragmentFeedBinding
+import hnu.multimedia.techparser.rss.RssRepository
 import hnu.multimedia.techparser.rss.model.RssFeedModel
 import hnu.multimedia.techparser.util.FirebaseRef
 
@@ -28,9 +30,10 @@ class FeedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        getRssFeeds()
+        // TODO : 구독중인 블로그의 RSS 피드만을 담기
+        feeds = RssRepository.feeds.toMutableList()
         binding.folderRecyclerView.layoutManager = LinearLayoutManager(binding.root.context)
-        binding.folderRecyclerView.adapter = FeedAdapter(feeds)
+        binding.folderRecyclerView.adapter = FeedAdapter(feeds, lifecycleScope)
 
         return binding.root
     }

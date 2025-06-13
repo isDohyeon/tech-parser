@@ -17,23 +17,7 @@ object RssParser {
 
     private val rssApiService = RssRetrofitClient.createRssService()
 
-    private fun parseRssDate(dateStr: String?): Date? {
-        val dateFormats = listOf(
-            SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH),
-            SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH)
-        )
-        for (format in dateFormats) {
-            return dateStr?.let { format.parse(it) }
-        }
-        return null
-    }
-
-    private suspend fun fetchRssFeed(rssUrl: String): List<RssItem> = withContext(Dispatchers.IO) {
-        val rssFeed = rssApiService.getRssFeed(rssUrl)
-        rssFeed.channel.items?.take(10) ?: emptyList()
-    }
-
-    suspend fun fetchRssFeeds(): List<RssFeedModel> = withContext(Dispatchers.IO) {
+    suspend fun parseRssFeeds(): List<RssFeedModel> = withContext(Dispatchers.IO) {
         val feeds = mutableListOf<RssFeedModel>()
 
         val snapshot = FirebaseRef.blogs.get().await()
@@ -43,7 +27,7 @@ object RssParser {
                 val rssUrl = blogSnap.child("rssUrl").getValue(String::class.java) ?: return@async emptyList<RssFeedModel>()
                 val logoUrl = blogSnap.child("logoUrl").getValue(String::class.java) ?: ""
 
-                val items = fetchRssFeed(rssUrl)
+                val items = parseRssFeed(rssUrl)
                 items.transform(blogName, logoUrl)
             }
         }
@@ -56,5 +40,21 @@ object RssParser {
         return@withContext sortedFeeds.mapIndexed { index, feedModel ->
             feedModel.copy(id = index)
         }
+    }
+
+    private suspend fun parseRssFeed(rssUrl: String): List<RssItem> = withContext(Dispatchers.IO) {
+        val rssFeed = rssApiService.getRssFeed(rssUrl)
+        rssFeed.channel.items ?: emptyList()
+    }
+
+    private fun parseRssDate(dateStr: String?): Date? {
+        val dateFormats = listOf(
+            SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH),
+            SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH)
+        )
+        for (format in dateFormats) {
+            return dateStr?.let { format.parse(it) }
+        }
+        return null
     }
 }

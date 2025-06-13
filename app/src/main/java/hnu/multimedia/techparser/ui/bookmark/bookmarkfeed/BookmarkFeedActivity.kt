@@ -36,7 +36,8 @@ class BookmarkFeedActivity : AppCompatActivity() {
             LinearLayoutManager(this@BookmarkFeedActivity)
         binding.folderRecyclerView.adapter = BookmarkFeedAdapter(feeds, "")
 
-        Utils.findSavedFolder(folderName) { savedFolder ->
+        lifecycleScope.launch {
+            val savedFolder = Utils.findSavedFolder(folderName)
             val bookmarkFolderRef = FirebaseRef.bookmarkFolderRef(savedFolder)
             val postListener = object : ValueEventListener {
                 @SuppressLint("NotifyDataSetChanged")

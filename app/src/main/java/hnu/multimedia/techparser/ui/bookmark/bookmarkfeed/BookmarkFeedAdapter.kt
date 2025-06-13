@@ -54,6 +54,7 @@ class BookmarkFeedAdapter(
                 .setMessage("북마크한 피드 \"$title\"을(를) 삭제하시겠습니까?")
                 .setPositiveButton("예") { _, _ ->
                     deleteBookmarkFeed(position)
+                    Toast.makeText(holder.binding.root.context, "피드가 삭제되었습니다.", Toast.LENGTH_SHORT).show()
                 }
                 .setNegativeButton("아니오", null)
                 .show()

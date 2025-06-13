@@ -40,11 +40,11 @@ class BookmarkFragment : Fragment() {
 
     private fun showAddBookmarkDialog() {
         val editText = EditText(requireContext()).apply {
-            hint = "북마크 이름을 입력하세요"
+            hint = "폴더 이름을 입력하세요"
         }
 
         AlertDialog.Builder(requireContext())
-            .setTitle("북마크 추가")
+            .setTitle("북마크 폴더 추가")
             .setView(editText)
             .setPositiveButton("추가") { _, _ ->
                 val folderName = editText.text.toString().trim()

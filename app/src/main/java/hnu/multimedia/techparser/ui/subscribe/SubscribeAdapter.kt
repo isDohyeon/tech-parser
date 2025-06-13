@@ -1,0 +1,52 @@
+package hnu.multimedia.techparser.ui.subscribe
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.firebase.ktx.Firebase
+import hnu.multimedia.techparser.databinding.ItemBlogBinding
+import hnu.multimedia.techparser.ui.subscribe.model.BlogModel
+import hnu.multimedia.techparser.util.FirebaseRef
+
+class SubscribeAdapter(
+    private var blogs: MutableList<BlogModel>,
+    private val isSubscribe: Boolean
+) : RecyclerView.Adapter<SubscribeAdapter.ViewHolder>() {
+
+    class ViewHolder(val binding: ItemBlogBinding) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val itemBinding = ItemBlogBinding.inflate(inflater, parent, false)
+        return ViewHolder(itemBinding)
+    }
+
+    override fun getItemCount(): Int {
+        return blogs.size
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val blogName = blogs[position].name
+
+        holder.binding.textViewBlogName2.text = blogName
+        Glide.with(holder.binding.root.context)
+            .load(blogs[position].logoUrl)
+            .into(holder.binding.imageViewBlogLogo2)
+        if (isSubscribe) {
+            holder.binding.imageViewCheck.isVisible = true
+            holder.binding.imageViewUncheck.isVisible = false
+        } else {
+            holder.binding.imageViewCheck.isVisible = false
+            holder.binding.imageViewUncheck.isVisible = true
+        }
+
+        holder.binding.imageViewCheck.setOnClickListener {
+            FirebaseRef.subscribeRef().child(blogName).removeValue()
+        }
+        holder.binding.imageViewUncheck.setOnClickListener {
+            FirebaseRef.subscribeRef().child(blogName).setValue(true)
+        }
+    }
+}

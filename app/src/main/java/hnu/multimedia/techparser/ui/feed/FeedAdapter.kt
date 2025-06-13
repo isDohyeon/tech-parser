@@ -13,11 +13,15 @@ import hnu.multimedia.techparser.databinding.ItemPostBinding
 import hnu.multimedia.techparser.rss.model.RssFeedModel
 import hnu.multimedia.techparser.util.FirebaseRef
 import hnu.multimedia.techparser.util.Utils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class FeedAdapter(
-    private val feeds: List<RssFeedModel>
+    private val feeds: List<RssFeedModel>,
+    private val coroutineScope: CoroutineScope  // ← 추가
 ) : RecyclerView.Adapter<FeedAdapter.ViewHolder>(){
 
     class ViewHolder(val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root)
@@ -86,7 +90,9 @@ class FeedAdapter(
     ) {
         val selectedFolder = folderArray[selectedIndex]
         val selectedPostId = feeds[position].id
-        Utils.findSavedFolder(selectedFolder) { folderName ->
+        coroutineScope.launch {
+            val folderName = Utils.findSavedFolder(selectedFolder)
+
             if (folderName.isNotEmpty()) {
                 FirebaseRef.bookmarkFolderRef(folderName)
                     .push()
@@ -94,7 +100,7 @@ class FeedAdapter(
 
                 Toast.makeText(
                     context,
-                    "'${selectedFolder}' 폴더에 추가됨",
+                    "${selectedFolder} 폴더에 추가됨",
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
