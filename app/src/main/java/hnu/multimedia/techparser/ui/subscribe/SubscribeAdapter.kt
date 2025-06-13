@@ -2,6 +2,7 @@ package hnu.multimedia.techparser.ui.subscribe
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -38,11 +39,11 @@ class SubscribeAdapter(
             .load(blogs[position].logoUrl)
             .into(holder.binding.imageViewBlogLogo2)
         if (isSubscribe) {
-            holder.binding.imageViewCheck.isVisible = true
-            holder.binding.imageViewUncheck.isVisible = false
+            holder.binding.imageViewCheck.visibility = View.VISIBLE
+            holder.binding.imageViewUncheck.visibility = View.GONE
         } else {
-            holder.binding.imageViewCheck.isVisible = false
-            holder.binding.imageViewUncheck.isVisible = true
+            holder.binding.imageViewCheck.visibility = View.GONE
+            holder.binding.imageViewUncheck.visibility = View.VISIBLE
         }
 
         holder.binding.imageViewCheck.setOnClickListener {

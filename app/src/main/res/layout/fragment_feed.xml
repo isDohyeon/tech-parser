@@ -13,6 +13,20 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
 
+        <EditText
+            android:id="@+id/editTextSearch"
+            android:layout_width="257dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:hint="검색어를 입력해주세요"
+            android:inputType="text"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
@@ -34,6 +48,16 @@
             android:src="@drawable/ic_notifications_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageViewSearch"
+            android:layout_width="45dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/baseline_search_24"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewNotification"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
