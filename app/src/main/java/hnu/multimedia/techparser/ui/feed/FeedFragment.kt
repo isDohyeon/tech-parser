@@ -1,6 +1,7 @@
 package hnu.multimedia.techparser.ui.feed
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.google.firebase.database.ValueEventListener
 import hnu.multimedia.techparser.databinding.FragmentFeedBinding
 import hnu.multimedia.techparser.rss.RssRepository
 import hnu.multimedia.techparser.rss.model.RssFeedModel
+import hnu.multimedia.techparser.ui.feed.notification.NotificationLogActivity
 import hnu.multimedia.techparser.util.FirebaseRef
 
 class FeedFragment : Fragment() {
@@ -52,6 +54,11 @@ class FeedFragment : Fragment() {
             filterFeeds(query)
         }
 
+        binding.imageViewNotification.setOnClickListener {
+            val intent = Intent(binding.root.context, NotificationLogActivity::class.java)
+            startActivity(intent)
+        }
+
         return binding.root
     }
 
@@ -85,6 +92,4 @@ class FeedFragment : Fragment() {
         filteredFeeds.addAll(searchResults)
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }
-
-
 }

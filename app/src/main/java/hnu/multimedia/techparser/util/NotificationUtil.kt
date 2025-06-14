@@ -73,6 +73,19 @@ class NotificationUtil {
             builder.setAutoCancel(true)
 
             notificationManager.notify(System.currentTimeMillis().toInt(), builder.build())
+            saveNotificationLog(context, title, message, url)
+        }
+
+        private fun saveNotificationLog(
+            context: Context,
+            title: String,
+            message: String,
+            url: String
+        ) {
+            val prefs = context.getSharedPreferences("notification_logs", Context.MODE_PRIVATE)
+            val logs = prefs.getStringSet("logs", mutableSetOf())?.toMutableSet() ?: mutableSetOf()
+            logs.add("$title#$message#$url")
+            prefs.edit().putStringSet("logs", logs).apply()
         }
 
         fun requestPermissions(activity: AppCompatActivity) {
