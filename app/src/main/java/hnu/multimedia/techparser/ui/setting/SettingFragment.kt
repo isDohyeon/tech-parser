@@ -11,6 +11,7 @@ import hnu.multimedia.techparser.databinding.FragmentSettingBinding
 import hnu.multimedia.techparser.rss.RssFeedProcessor
 import hnu.multimedia.techparser.rss.model.RssFeedModel
 import hnu.multimedia.techparser.ui.setting.blog.BlogSettingActivity
+import hnu.multimedia.techparser.ui.setting.keyword.KeywordSettingActivity
 import hnu.multimedia.techparser.util.FirebaseRef
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,6 +38,11 @@ class SettingFragment : Fragment() {
 
         binding.imageViewBlogSetting.setOnClickListener {
             val intent = Intent(binding.root.context, BlogSettingActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.imageViewKeywordSetting.setOnClickListener {
+            val intent = Intent(binding.root.context, KeywordSettingActivity::class.java)
             startActivity(intent)
         }
         return binding.root
