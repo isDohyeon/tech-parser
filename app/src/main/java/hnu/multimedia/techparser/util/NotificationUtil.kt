@@ -65,7 +65,7 @@ class NotificationUtil {
             )
 
             builder.setSmallIcon(R.drawable.techparser_logo)
-            builder.setPriority(NotificationCompat.PRIORITY_MAX)
+            builder.setPriority(importance - 2)
             builder.setDefaults(NotificationCompat.DEFAULT_ALL)
             builder.setContentTitle("$title 의 새로운 피드")
             builder.setContentText(message)

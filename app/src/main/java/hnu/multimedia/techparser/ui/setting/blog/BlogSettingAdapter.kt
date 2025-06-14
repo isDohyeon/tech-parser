@@ -29,7 +29,6 @@ class BlogSettingAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val blogName = blogs[position]
         holder.binding.textViewBlogNameSetting.text = blogName
-        holder.binding.switchBlogSetting.setOnCheckedChangeListener(null) // 기존 리스너 제거
         holder.binding.switchBlogSetting.isChecked = settings[blogName] ?: true
         val matchedBlog = RssRepository.blogs.find { it.name == blogName }
         Glide.with(holder.binding.root.context)

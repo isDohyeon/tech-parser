@@ -1,5 +1,6 @@
 package hnu.multimedia.techparser.util
 
+import android.util.Log
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -39,5 +40,22 @@ object Utils {
         }
 
         return rawDate
+    }
+
+    suspend fun calculateImportance(blogName: String, feedTitle: String): Int {
+        Log.d("calculateImportance", "blogName : $blogName")
+        Log.d("calculateImportance", "feedTitle : $feedTitle")
+
+        var totalImportance = 0
+        val blogNameSnap = FirebaseRef.notificationBlogRef().get().await()
+//        val keyWordSnap
+
+        val isEnabled = blogNameSnap.child(blogName).getValue(Boolean::class.java) ?: true
+        if (isEnabled) {
+            totalImportance += 2
+        }
+        Log.d("calculateImportance", "importance : $totalImportance")
+
+        if (totalImportance > 4) return 4 else return totalImportance
     }
 }

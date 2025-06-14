@@ -5,6 +5,7 @@ import android.content.Context
 import hnu.multimedia.techparser.rss.model.RssFeedModel
 import hnu.multimedia.techparser.util.FirebaseRef
 import hnu.multimedia.techparser.util.NotificationUtil
+import hnu.multimedia.techparser.util.Utils
 import kotlinx.coroutines.tasks.await
 
 object RssFeedProcessor {
@@ -57,7 +58,7 @@ object RssFeedProcessor {
                 title = feed.blogName,
                 message = feed.title,
                 url = feed.link,
-                importance = NotificationManager.IMPORTANCE_HIGH
+                importance = Utils.calculateImportance(feed.blogName, feed.title)
             )
         }
     }
