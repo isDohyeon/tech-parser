@@ -13,8 +13,7 @@ class BlogSettingAdapter(
     private val settings: Map<String, Boolean>
 ) : RecyclerView.Adapter<BlogSettingAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val binding: ItemNotificationBlogBinding)
-        : RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(val binding: ItemNotificationBlogBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)

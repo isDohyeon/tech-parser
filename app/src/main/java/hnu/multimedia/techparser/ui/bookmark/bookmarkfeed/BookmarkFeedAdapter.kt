@@ -69,7 +69,7 @@ class BookmarkFeedAdapter(
             for (child in snapshot.children) {
                 val value = child.getValue(Long::class.java)?.toInt()
                 if (feeds[position].id == value) {
-                    folderRef.child(child.key!!).removeValue()
+                    folderRef.child(child.key.toString()).removeValue()
                     break
                 }
             }

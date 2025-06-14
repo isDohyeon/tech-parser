@@ -14,10 +14,7 @@ import hnu.multimedia.techparser.rss.model.RssFeedModel
 import hnu.multimedia.techparser.util.FirebaseRef
 import hnu.multimedia.techparser.util.Utils
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 class FeedAdapter(
     private val feeds: List<RssFeedModel>,
@@ -55,13 +52,13 @@ class FeedAdapter(
 
             FirebaseRef.bookmarksRef().get().addOnSuccessListener { snapshot ->
                 val folderArray = getFolderArray(snapshot)
-                createAlertDialog(context, folderArray, position)
+                createBookmarkAddDialog(context, folderArray, position)
             }
             true
         }
     }
 
-    private fun createAlertDialog(
+    private fun createBookmarkAddDialog(
         context: Context,
         folderArray: Array<String>,
         position: Int
