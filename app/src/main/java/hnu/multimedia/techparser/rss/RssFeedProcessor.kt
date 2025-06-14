@@ -3,6 +3,7 @@ package hnu.multimedia.techparser.rss
 import android.app.NotificationManager
 import android.content.Context
 import hnu.multimedia.techparser.rss.model.RssFeedModel
+import hnu.multimedia.techparser.util.FirebaseRef
 import hnu.multimedia.techparser.util.NotificationUtil
 import kotlinx.coroutines.tasks.await
 
@@ -20,7 +21,7 @@ object RssFeedProcessor {
     }
 
     private suspend fun getExistingFeeds(): List<RssFeedModel> {
-        val snapshot = hnu.multimedia.techparser.util.FirebaseRef.feeds.get().await()
+        val snapshot = FirebaseRef.feeds.get().await()
         return snapshot.children.mapNotNull {
             it.getValue(RssFeedModel::class.java)
         }
@@ -35,15 +36,15 @@ object RssFeedProcessor {
     }
 
     private suspend fun saveNewFeeds(newFeeds: List<RssFeedModel>) {
-        val ref = hnu.multimedia.techparser.util.FirebaseRef.feeds
+        val ref = FirebaseRef.feeds
         newFeeds.forEachIndexed { index, feed ->
             ref.child(index.toString()).setValue(feed).await()
         }
     }
 
     suspend fun notifyNewFeeds(context: Context, newFeeds: List<RssFeedModel>) {
-        val subscribedSnapshot = hnu.multimedia.techparser.util.FirebaseRef.subscribeRef().get().await()
-        val notificationSnapshot = hnu.multimedia.techparser.util.FirebaseRef.notificationRef().get().await()
+        val subscribedSnapshot = FirebaseRef.subscribeRef().get().await()
+        val notificationSnapshot = FirebaseRef.notificationRef().get().await()
 
         val isNotificationOn = notificationSnapshot.getValue(Boolean::class.java) ?: true
         if (!isNotificationOn) return

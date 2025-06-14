@@ -2,22 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.bookmark.BookmarkFragment">
+    tools:context=".ui.setting.blog.BlogSettingActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textViewBlogSettings"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:text="Bookmark"
+            android:text="Blog Settings"
             android:textAlignment="viewStart"
             android:textColor="@color/blue"
             android:textSize="30sp"
@@ -34,18 +38,8 @@
         android:background="?android:attr/listDivider" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/folderRecyclerView"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="490dp"
-        android:layout_margin="10dp"
-        android:clipToPadding="false"
-        android:padding="20dp"
-        app:spanCount="2" />
+        android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/buttonAddFolder"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="북마크 추가" />
 </LinearLayout>

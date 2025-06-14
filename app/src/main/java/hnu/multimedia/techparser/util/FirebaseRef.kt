@@ -34,12 +34,20 @@ class FirebaseRef {
             return users.child(currentUserId).child("subscribe")
         }
 
-        fun settingsRef(): DatabaseReference {
+        private fun settingsRef(): DatabaseReference {
             return users.child(currentUserId).child("settings")
         }
 
         fun notificationRef(): DatabaseReference {
             return settingsRef().child("notification")
+        }
+
+        fun notificationBlogRef(): DatabaseReference {
+            return settingsRef().child("notificationBlog")
+        }
+
+        fun keywordRef(): DatabaseReference {
+            return settingsRef().child("keyword")
         }
     }
 }

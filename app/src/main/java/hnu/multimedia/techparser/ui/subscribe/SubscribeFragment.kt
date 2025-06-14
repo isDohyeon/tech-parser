@@ -67,6 +67,13 @@ class SubscribeFragment : Fragment() {
                     allBlogs.filter { it.name !in subscribedKeys }
                 )
 
+                val notificationRef = FirebaseRef.notificationBlogRef()
+                notificationRef.removeValue().addOnSuccessListener {
+                    subscribedKeys.forEach { blogName ->
+                        notificationRef.child(blogName).setValue(true)
+                    }
+                }
+
                 binding.recyclerView.adapter?.notifyDataSetChanged()
             }
 

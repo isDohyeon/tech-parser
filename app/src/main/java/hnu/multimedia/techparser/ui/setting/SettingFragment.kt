@@ -1,5 +1,6 @@
 package hnu.multimedia.techparser.ui.setting
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import hnu.multimedia.techparser.databinding.FragmentSettingBinding
 import hnu.multimedia.techparser.rss.RssFeedProcessor
 import hnu.multimedia.techparser.rss.model.RssFeedModel
+import hnu.multimedia.techparser.ui.setting.blog.BlogSettingActivity
 import hnu.multimedia.techparser.util.FirebaseRef
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +33,11 @@ class SettingFragment : Fragment() {
 
         binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
             updateNotificationSetting(isChecked)
+        }
+
+        binding.imageViewBlogSetting.setOnClickListener {
+            val intent = Intent(binding.root.context, BlogSettingActivity::class.java)
+            startActivity(intent)
         }
         return binding.root
     }
