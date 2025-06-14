@@ -67,8 +67,8 @@ class NotificationUtil {
             builder.setSmallIcon(R.drawable.techparser_logo)
             builder.setPriority(importance - 2)
             builder.setDefaults(NotificationCompat.DEFAULT_ALL)
-            builder.setContentTitle("$title 의 새로운 피드")
-            builder.setContentText(message)
+            builder.setContentTitle("중요도 ${importance}의 새로운 피드")
+            builder.setContentText("$title - $message")
             builder.setContentIntent(pendingIntent)
             builder.setAutoCancel(true)
 

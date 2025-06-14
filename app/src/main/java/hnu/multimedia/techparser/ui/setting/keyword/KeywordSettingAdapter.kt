@@ -36,7 +36,7 @@ class KeywordSettingAdapter(
                 .setTitle("키워드 삭제")
                 .setMessage("키워드 \"$keyword\"을(를) 삭제하시겠습니까?")
                 .setPositiveButton("예") {_, _ ->
-                    removeKeyword(keyword, holder)
+                    removeKeyword(keyword)
                     Toast.makeText(
                         holder.binding.root.context, "$keyword 키워드가 삭제되었습니다.", Toast.LENGTH_SHORT)
                         .show()
@@ -47,8 +47,7 @@ class KeywordSettingAdapter(
     }
 
     private fun removeKeyword(
-        keyword: String,
-        holder: ViewHolder
+        keyword: String
     ) {
         val keywordRef = FirebaseRef.keywordRef()
         keywordRef.get().addOnSuccessListener { snapshot ->
@@ -57,7 +56,6 @@ class KeywordSettingAdapter(
                 value?.let {
                     if (value == keyword) {
                         keywordRef.child(child.key.toString()).removeValue()
-
                     }
                 }
             }

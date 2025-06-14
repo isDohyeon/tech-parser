@@ -48,14 +48,26 @@ object Utils {
 
         var totalImportance = 0
         val blogNameSnap = FirebaseRef.notificationBlogRef().get().await()
-//        val keyWordSnap
+        val keyWordSnap = FirebaseRef.keywordRef().get().await()
 
         val isEnabled = blogNameSnap.child(blogName).getValue(Boolean::class.java) ?: true
         if (isEnabled) {
             totalImportance += 2
         }
         Log.d("calculateImportance", "importance : $totalImportance")
+        val keywordList = keyWordSnap.children.mapNotNull { it.getValue(String::class.java) }
 
-        if (totalImportance > 4) return 4 else return totalImportance
+        val hasKeyword = keywordList.any { keyword ->
+            feedTitle.contains(keyword, ignoreCase = true)
+        }
+
+        if (hasKeyword) {
+            totalImportance += 2
+            Log.d("calculateImportance", "키워드 포함됨 (+2)")
+        }
+        val finalImportance = if (totalImportance > 4) 4 else totalImportance
+        Log.d("calculateImportance", "최종 importance : $finalImportance")
+
+        return finalImportance
     }
 }
