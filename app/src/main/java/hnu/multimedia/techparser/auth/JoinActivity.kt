@@ -56,7 +56,7 @@ class JoinActivity : AppCompatActivity() {
         val userRef = FirebaseRef.users.child(uid)
         userRef.child("userInfo").setValue(userModel)
         userRef.child("bookmarks").child("${System.currentTimeMillis()}_기본 폴더").setValue(true)
-        userRef.child("subscribe").child("Toss tech").setValue(true)
+        userRef.child("subscribe").setValue(true)
         userRef.child("settings").child("notification").setValue(true)
         userRef.child("settings").child("notificationBlog").setValue(true)
         userRef.child("settings").child("keyword").setValue(true)

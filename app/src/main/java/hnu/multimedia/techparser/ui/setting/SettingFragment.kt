@@ -65,7 +65,7 @@ class SettingFragment : Fragment() {
             val testFeed = RssFeedModel(
                 id = System.currentTimeMillis().toInt(),
                 blogName = "Toss Tech",
-                title = "테스트 피드의 제목 : ${System.currentTimeMillis()}, 키워드 : AI",
+                title = "테스트 피드 제목 : ${System.currentTimeMillis()} Java",
                 link = "https://www.hannam.ac.kr/kor/main/",
                 logoUrl = "",
                 pubDate = "Sat, 14 Jun 2025 18:00:00 GMT"

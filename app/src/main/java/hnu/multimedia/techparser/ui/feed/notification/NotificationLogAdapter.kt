@@ -1,5 +1,7 @@
 package hnu.multimedia.techparser.ui.feed.notification
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,8 +9,7 @@ import hnu.multimedia.techparser.databinding.ItemNotificationLogBinding
 
 
 class NotificationLogAdapter(
-    private val logs: List<Triple<String, String, String>>,
-    private val onItemClick: (String) -> Unit
+    private val logs: List<Triple<String, String, String>>
 ) : RecyclerView.Adapter<NotificationLogAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemNotificationLogBinding)
@@ -17,7 +18,8 @@ class NotificationLogAdapter(
             binding.textViewTitle.text = log.first
             binding.textViewMessage.text = log.second
             binding.root.setOnClickListener {
-                onItemClick(log.third)
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(log.third))
+                binding.root.context.startActivity(intent)
             }
         }
     }
