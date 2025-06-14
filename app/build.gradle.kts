@@ -88,4 +88,6 @@ dependencies {
 
     // TikXML 어노테이션 프로세서
     kapt("com.tickaroo.tikxml:processor:0.8.13")
+
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
 }

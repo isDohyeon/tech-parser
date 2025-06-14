@@ -37,5 +37,9 @@ class FirebaseRef {
         fun settingsRef(): DatabaseReference {
             return users.child(currentUserId).child("settings")
         }
+
+        fun notificationRef(): DatabaseReference {
+            return users.child(currentUserId).child("notification")
+        }
     }
 }
