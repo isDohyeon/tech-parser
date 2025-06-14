@@ -39,7 +39,7 @@ class FirebaseRef {
         }
 
         fun notificationRef(): DatabaseReference {
-            return users.child(currentUserId).child("notification")
+            return settingsRef().child("notification")
         }
     }
 }

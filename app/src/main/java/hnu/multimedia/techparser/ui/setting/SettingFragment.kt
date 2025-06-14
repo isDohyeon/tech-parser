@@ -1,6 +1,5 @@
 package hnu.multimedia.techparser.ui.setting
 
-import android.app.NotificationManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,11 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import hnu.multimedia.techparser.databinding.FragmentSettingBinding
 import hnu.multimedia.techparser.rss.RssFeedProcessor
-import hnu.multimedia.techparser.rss.RssParser
-import hnu.multimedia.techparser.rss.RssWorker
 import hnu.multimedia.techparser.rss.model.RssFeedModel
 import hnu.multimedia.techparser.util.FirebaseRef
-import hnu.multimedia.techparser.util.NotificationUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,10 +24,27 @@ class SettingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        fetchNotificationSetting()
         binding.buttonNotificationTest.setOnClickListener {
             testNotification()
         }
+
+        binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
+            updateNotificationSetting(isChecked)
+        }
         return binding.root
+    }
+
+    private fun fetchNotificationSetting() {
+        val ref = FirebaseRef.notificationRef()
+        ref.get().addOnSuccessListener { snapshot ->
+            val isNotificationOn = snapshot.getValue(Boolean::class.java) ?: true
+            binding.switchNotification.isChecked = isNotificationOn
+        }
+    }
+
+    private fun updateNotificationSetting(isChecked: Boolean) {
+        FirebaseRef.notificationRef().setValue(isChecked)
     }
 
     private fun testNotification() {
