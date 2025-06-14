@@ -40,7 +40,7 @@ class BookmarkFragment : Fragment() {
 
     private fun showAddBookmarkDialog() {
         val editText = EditText(requireContext()).apply {
-            hint = "폴더 이름을 입력하세요"
+            hint = " 폴더 이름을 입력하세요"
         }
 
         AlertDialog.Builder(requireContext())

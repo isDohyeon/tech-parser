@@ -12,7 +12,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import hnu.multimedia.techparser.databinding.ActivityKeywordSettingBinding
 import hnu.multimedia.techparser.util.FirebaseRef
-import kotlinx.coroutines.tasks.await
 
 class KeywordSettingActivity : AppCompatActivity() {
 

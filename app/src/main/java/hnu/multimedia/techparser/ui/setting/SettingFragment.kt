@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
 import hnu.multimedia.techparser.databinding.FragmentSettingBinding
 import hnu.multimedia.techparser.rss.RssFeedProcessor
 import hnu.multimedia.techparser.rss.model.RssFeedModel
@@ -16,7 +15,6 @@ import hnu.multimedia.techparser.util.FirebaseRef
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
 class SettingFragment : Fragment() {
 

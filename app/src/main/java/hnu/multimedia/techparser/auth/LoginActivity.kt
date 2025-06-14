@@ -4,12 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import hnu.multimedia.techparser.MainActivity
 import hnu.multimedia.techparser.databinding.ActivityLoginBinding
-import hnu.multimedia.techparser.util.MyData
 import hnu.multimedia.techparser.validate.UserInfoValidator
 
 class LoginActivity : AppCompatActivity() {

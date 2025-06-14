@@ -15,13 +15,17 @@ class TechParserApp : Application() {
         super.onCreate()
         CoroutineScope(SupervisorJob() + Dispatchers.Main).launch {
             RssRepository.fetchBlogs()
-            val rssFeeds = RssParser.parseRssFeeds()
-            FirebaseRef.feeds.setValue(true)
-            for (rssFeed in rssFeeds) {
-                val key = rssFeed.id.toString()
-                FirebaseRef.feeds.child(key).setValue(rssFeed)
-            }
+            updateRssFeed()
             RssRepository.fetchFeeds()
+        }
+    }
+
+    private suspend fun updateRssFeed() {
+        val rssFeeds = RssParser.parseRssFeeds()
+        FirebaseRef.feeds.setValue(true)
+        for (rssFeed in rssFeeds) {
+            val key = rssFeed.id.toString()
+            FirebaseRef.feeds.child(key).setValue(rssFeed)
         }
     }
 }

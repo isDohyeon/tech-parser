@@ -23,10 +23,10 @@ class BookmarkFeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
         val folderName = intent.getStringExtra("folderName").toString()
         binding.textViewTitle.text = folderName
-        binding.folderRecyclerView.layoutManager =
-            LinearLayoutManager(this@BookmarkFeedActivity)
+        binding.folderRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.folderRecyclerView.adapter = BookmarkFeedAdapter(feeds, "")
 
         lifecycleScope.launch {

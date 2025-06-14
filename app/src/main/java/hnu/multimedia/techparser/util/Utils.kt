@@ -1,6 +1,6 @@
 package hnu.multimedia.techparser.util
 
-import android.util.Log
+import com.google.firebase.database.DataSnapshot
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -33,41 +33,55 @@ object Utils {
         val outputFormat = SimpleDateFormat("yyyy년 M월 d일", Locale.KOREAN)
 
         for (format in inputFormats) {
-            try {
-                val date = format.parse(rawDate)
-                if (date != null) return outputFormat.format(date)
-            } catch (_: Exception) {}
+            val date = format.parse(rawDate)
+            if (date != null) {
+                return outputFormat.format(date)
+            }
         }
 
         return rawDate
     }
 
     suspend fun calculateImportance(blogName: String, feedTitle: String): Int {
-        Log.d("calculateImportance", "blogName : $blogName")
-        Log.d("calculateImportance", "feedTitle : $feedTitle")
-
         var totalImportance = 0
         val blogNameSnap = FirebaseRef.notificationBlogRef().get().await()
         val keyWordSnap = FirebaseRef.keywordRef().get().await()
 
-        val isEnabled = blogNameSnap.child(blogName).getValue(Boolean::class.java) ?: true
-        if (isEnabled) {
-            totalImportance += 2
-        }
-        Log.d("calculateImportance", "importance : $totalImportance")
-        val keywordList = keyWordSnap.children.mapNotNull { it.getValue(String::class.java) }
+        totalImportance = addBlogImportance(blogNameSnap, blogName, totalImportance)
 
+        totalImportance = addKeywordImportance(keyWordSnap, feedTitle, totalImportance)
+
+        val finalImportance = if (totalImportance > 4) 4 else totalImportance
+
+        return finalImportance
+    }
+
+    private fun addKeywordImportance(
+        keyWordSnap: DataSnapshot,
+        feedTitle: String,
+        totalImportance: Int
+    ): Int {
+        var totalImportance1 = totalImportance
+        val keywordList = keyWordSnap.children.mapNotNull { it.getValue(String::class.java) }
         val hasKeyword = keywordList.any { keyword ->
             feedTitle.contains(keyword, ignoreCase = true)
         }
-
         if (hasKeyword) {
-            totalImportance += 2
-            Log.d("calculateImportance", "키워드 포함됨 (+2)")
+            totalImportance1 += 2
         }
-        val finalImportance = if (totalImportance > 4) 4 else totalImportance
-        Log.d("calculateImportance", "최종 importance : $finalImportance")
+        return totalImportance1
+    }
 
-        return finalImportance
+    private fun addBlogImportance(
+        blogNameSnap: DataSnapshot,
+        blogName: String,
+        totalImportance: Int
+    ): Int {
+        var totalImportance1 = totalImportance
+        val isEnabled = blogNameSnap.child(blogName).getValue(Boolean::class.java) ?: true
+        if (isEnabled) {
+            totalImportance1 += 2
+        }
+        return totalImportance1
     }
 }

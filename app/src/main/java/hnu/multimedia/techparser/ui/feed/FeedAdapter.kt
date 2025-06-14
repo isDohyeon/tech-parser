@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class FeedAdapter(
     private val feeds: List<RssFeedModel>,
-    private val coroutineScope: CoroutineScope  // ← 추가
+    private val coroutineScope: CoroutineScope
 ) : RecyclerView.Adapter<FeedAdapter.ViewHolder>(){
 
     class ViewHolder(val binding: ItemPostBinding) : RecyclerView.ViewHolder(binding.root)
@@ -100,8 +100,6 @@ class FeedAdapter(
                     "${selectedFolder} 폴더에 추가됨",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else {
-                Toast.makeText(context, "폴더를 찾지 못했습니다.", Toast.LENGTH_SHORT).show()
             }
         }
     }

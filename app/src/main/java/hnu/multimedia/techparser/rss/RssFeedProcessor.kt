@@ -1,6 +1,5 @@
 package hnu.multimedia.techparser.rss
 
-import android.app.NotificationManager
 import android.content.Context
 import hnu.multimedia.techparser.rss.model.RssFeedModel
 import hnu.multimedia.techparser.util.FirebaseRef

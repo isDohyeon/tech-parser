@@ -6,10 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import hnu.multimedia.techparser.databinding.ItemKeywordBinding
-import hnu.multimedia.techparser.databinding.ItemNotificationBlogBinding
-import hnu.multimedia.techparser.ui.setting.blog.BlogSettingAdapter.ViewHolder
 import hnu.multimedia.techparser.util.FirebaseRef
-import kotlinx.coroutines.tasks.await
 
 class KeywordSettingAdapter(
     private val keywords: List<String>

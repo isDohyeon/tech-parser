@@ -1,6 +1,5 @@
 package hnu.multimedia.techparser.util
 
-import android.util.Log
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database

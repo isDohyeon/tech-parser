@@ -1,4 +1,4 @@
-package hnu.multimedia.techparser.auth
+package hnu.multimedia.techparser.auth.model
 
 data class UserModel(
     val uid: String = "",

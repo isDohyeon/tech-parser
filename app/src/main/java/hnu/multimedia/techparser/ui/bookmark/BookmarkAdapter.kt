@@ -49,7 +49,7 @@ class BookmarkAdapter(
             .setMessage("폴더 \"$folderName\"을(를) 삭제하시겠습니까?")
             .setPositiveButton("예") { _, _ ->
                 deleteBookmarkFolder(folderName)
-                Toast.makeText(holder.binding.root.context, "$folderName 폴더가 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(holder.binding.root.context, "$\"folderName\"가 삭제되었습니다.", Toast.LENGTH_SHORT).show()
             }
             .setNegativeButton("아니오", null)
             .show()

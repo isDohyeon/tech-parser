@@ -5,7 +5,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
-import hnu.multimedia.techparser.auth.UserModel
+import hnu.multimedia.techparser.auth.model.UserModel
 
 class MyData {
 
