@@ -24,6 +24,7 @@ class WebViewActivity : AppCompatActivity() {
             settings.domStorageEnabled = true
 
             webViewClient = object : WebViewClient() {
+                @SuppressLint("WebViewClientOnReceivedSslError")
                 override fun onReceivedSslError(
                     view: WebView?,
                     handler: android.webkit.SslErrorHandler?,

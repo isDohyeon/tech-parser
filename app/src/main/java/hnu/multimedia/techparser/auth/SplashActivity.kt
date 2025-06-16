@@ -5,20 +5,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import hnu.multimedia.techparser.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivitySplashBinding.inflate(layoutInflater) }
-    private lateinit var auth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        auth = Firebase.auth
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)

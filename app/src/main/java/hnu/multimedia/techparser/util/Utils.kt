@@ -48,11 +48,9 @@ object Utils {
         val keyWordSnap = FirebaseRef.keywordRef().get().await()
 
         totalImportance = addBlogImportance(blogNameSnap, blogName, totalImportance)
-
         totalImportance = addKeywordImportance(keyWordSnap, feedTitle, totalImportance)
 
         val finalImportance = if (totalImportance > 4) 4 else totalImportance
-
         return finalImportance
     }
 
@@ -61,15 +59,15 @@ object Utils {
         feedTitle: String,
         totalImportance: Int
     ): Int {
-        var totalImportance1 = totalImportance
+        var keywordImportance = totalImportance
         val keywordList = keyWordSnap.children.mapNotNull { it.getValue(String::class.java) }
         val hasKeyword = keywordList.any { keyword ->
             feedTitle.contains(keyword, ignoreCase = true)
         }
         if (hasKeyword) {
-            totalImportance1 += 2
+            keywordImportance += 2
         }
-        return totalImportance1
+        return keywordImportance
     }
 
     private fun addBlogImportance(
@@ -77,11 +75,11 @@ object Utils {
         blogName: String,
         totalImportance: Int
     ): Int {
-        var totalImportance1 = totalImportance
+        var blogImportance = totalImportance
         val isEnabled = blogNameSnap.child(blogName).getValue(Boolean::class.java) ?: true
         if (isEnabled) {
-            totalImportance1 += 2
+            blogImportance += 2
         }
-        return totalImportance1
+        return blogImportance
     }
 }

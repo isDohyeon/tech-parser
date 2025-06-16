@@ -32,6 +32,7 @@ class BookmarkFeedActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val savedFolder = Utils.findSavedFolder(folderName)
             val bookmarkFolderRef = FirebaseRef.bookmarkFolderRef(savedFolder)
+
             val postListener = object : ValueEventListener {
                 @SuppressLint("NotifyDataSetChanged")
                 override fun onDataChange(snapshot: DataSnapshot) {

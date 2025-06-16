@@ -27,7 +27,7 @@ object RssParser {
                 val rssUrl = blogSnap.child("rssUrl").getValue(String::class.java) ?: return@async emptyList<RssFeedModel>()
                 val logoUrl = blogSnap.child("logoUrl").getValue(String::class.java) ?: ""
 
-                val items = parseRssFeed(rssUrl)
+                val items = getRssItems(rssUrl)
                 items.transform(blogName, logoUrl)
             }
         }
@@ -42,7 +42,7 @@ object RssParser {
         }
     }
 
-    private suspend fun parseRssFeed(rssUrl: String): List<RssItem> = withContext(Dispatchers.IO) {
+    private suspend fun getRssItems(rssUrl: String): List<RssItem> = withContext(Dispatchers.IO) {
         val rssFeed = rssApiService.getRssFeed(rssUrl)
         rssFeed.channel.items ?: emptyList()
     }

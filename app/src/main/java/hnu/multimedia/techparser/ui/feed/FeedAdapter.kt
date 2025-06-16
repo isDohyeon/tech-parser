@@ -97,7 +97,7 @@ class FeedAdapter(
 
                 Toast.makeText(
                     context,
-                    "${selectedFolder} 폴더에 추가됨",
+                    "$selectedFolder 폴더에 추가됨",
                     Toast.LENGTH_SHORT
                 ).show()
             }
