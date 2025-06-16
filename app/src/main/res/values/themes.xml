@@ -3,6 +3,7 @@
     <style name="Base.Theme.TechParser" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
          <item name="colorPrimary">@color/blue</item>
+        <item name="android:logo">@drawable/techparser_logo</item>
     </style>
 
     <style name="Theme.TechParser" parent="Base.Theme.TechParser" />
