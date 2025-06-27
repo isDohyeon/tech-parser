@@ -2,25 +2,23 @@
 
 # TechParser
 
-**TechParser**는 여러 기술 블로그의 RSS 피드를 하나의 앱에서 통합적으로 관리하고 구독할 수 있는 안드로이드 애플리케이션입니다.
-<br>
-사용자는 관심 있는 기술 블로그를 구독하고, 최신 포스트를 실시간으로 받아볼 수 있으며, 중요한 글들을 북마크로 저장하여 나중에 다시 읽을 수 있습니다.
-<br>
-백그라운드로 피드 데이터를 수집하고, 특정 블로그 혹은 키워드를 계산한 스마트 알림 시스템을 통해 중요도가 높은 피드의 알림을 받을 수 있습니다.
+- **TechParser**는 여러 기술 블로그의 RSS 피드를 하나의 앱에서 통합적으로 관리하고 구독할 수 있는 안드로이드 애플리케이션입니다.
+- 사용자는 관심 있는 기술 블로그를 구독하고, 최신 포스트를 실시간으로 받아볼 수 있으며, 중요한 글들을 북마크로 저장하여 나중에 다시 읽을 수 있습니다.
+- 백그라운드로 피드 데이터를 수집하고, 특정 블로그 혹은 키워드를 계산한 스마트 알림 시스템을 통해 중요도가 높은 피드의 알림을 받을 수 있습니다.
 
 <br>
 
 ## 📁 개인 프로젝트 기획서
-<img src="https://github.com/user-attachments/assets/0301739b-0338-4640-8ca7-64606487cf83" width="500"/>
-<img src="https://github.com/user-attachments/assets/19056418-3a40-448d-b0a1-79974ad12516" width="500"/>
-<img src="https://github.com/user-attachments/assets/c0db2702-882c-401d-8cb6-133aa8358ba4" width="500"/>
-<img src="https://github.com/user-attachments/assets/9d99cc7e-5cef-4a12-9150-7621f933e78c" width="500"/>
-<img src="https://github.com/user-attachments/assets/67975497-960f-441b-9976-a4445dcdebb8" width="500"/>
-<img src="https://github.com/user-attachments/assets/a1388f73-d3e6-40b9-a099-0672e931d259" width="500"/>
-<img src="https://github.com/user-attachments/assets/31c18a41-0715-45c4-946c-3fee609fc86a" width="500"/>
-<img src="https://github.com/user-attachments/assets/f4fcecbf-2a0f-409d-91b7-8e55b3b903a2" width="500"/>
-<img src="https://github.com/user-attachments/assets/8106d8c5-a08a-4139-8027-f45b05c1c682" width="500"/>
-<img src="https://github.com/user-attachments/assets/7d5d6acb-1254-4423-ada7-d55022e42161" width="500"/>
+<img src="https://github.com/user-attachments/assets/0301739b-0338-4640-8ca7-64606487cf83" width="400"/>
+<img src="https://github.com/user-attachments/assets/19056418-3a40-448d-b0a1-79974ad12516" width="400"/>
+<img src="https://github.com/user-attachments/assets/c0db2702-882c-401d-8cb6-133aa8358ba4" width="400"/>
+<img src="https://github.com/user-attachments/assets/9d99cc7e-5cef-4a12-9150-7621f933e78c" width="400"/>
+<img src="https://github.com/user-attachments/assets/67975497-960f-441b-9976-a4445dcdebb8" width="400"/>
+<img src="https://github.com/user-attachments/assets/a1388f73-d3e6-40b9-a099-0672e931d259" width="400"/>
+<img src="https://github.com/user-attachments/assets/31c18a41-0715-45c4-946c-3fee609fc86a" width="400"/>
+<img src="https://github.com/user-attachments/assets/f4fcecbf-2a0f-409d-91b7-8e55b3b903a2" width="400"/>
+<img src="https://github.com/user-attachments/assets/8106d8c5-a08a-4139-8027-f45b05c1c682" width="400"/>
+<img src="https://github.com/user-attachments/assets/7d5d6acb-1254-4423-ada7-d55022e42161" width="400"/>
 
 <br>
 <br>
